@@ -60,7 +60,7 @@ namespace Kogane
 			m_openButtonUI.onClick.AddListener( () => SetState( true ) );
 #endif
 		}
-		
+
 #if DISABLE_UNI_UI_DEBUG_TEXT
 #else
 		/// <summary>
