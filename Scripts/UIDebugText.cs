@@ -7,7 +7,7 @@ using UnityEngine.UI;
 #pragma warning disable 0649
 #pragma warning disable 0414
 
-namespace Kogane.Internal
+namespace Kogane
 {
 	/// <summary>
 	/// デバッグテキストの UI を管理するクラス
