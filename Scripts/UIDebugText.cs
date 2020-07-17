@@ -19,21 +19,21 @@ namespace Kogane.Internal
 		//====================================================================================
 		// 定数
 		//====================================================================================
-		private const string ENABLE_SYMBOL_NAME = "ENABLE_UNI_UI_DEBUG_TEXT";
+		private const string DISABLE_CONDITION_STRING = "Hq9kSarVV5BXq4jNPzxj6kQEL8xqvyDr";
 
 		//====================================================================================
 		// 変数(SerializeField)
 		//====================================================================================
-		[SerializeField] private GameObject    m_closeBaseUI   = null;
-		[SerializeField] private GameObject    m_openBaseUI    = null;
-		[SerializeField] private Button        m_closeButtonUI = null;
-		[SerializeField] private Button        m_openButtonUI  = null;
-		[SerializeField] private CanvasGroup   m_canvasGroup   = null;
-		[SerializeField] private GameObject    m_root          = null;
-		[SerializeField] private RectTransform m_textBaseUI    = null;
-		[SerializeField] private Text          m_textUI        = null;
-		[SerializeField] private RectTransform m_textRectUI    = null;
-		[SerializeField] private Vector2       m_sizeOffset    = Vector2.zero;
+		[SerializeField] private GameObject    m_closeBaseUI   = default;
+		[SerializeField] private GameObject    m_openBaseUI    = default;
+		[SerializeField] private Button        m_closeButtonUI = default;
+		[SerializeField] private Button        m_openButtonUI  = default;
+		[SerializeField] private CanvasGroup   m_canvasGroup   = default;
+		[SerializeField] private GameObject    m_root          = default;
+		[SerializeField] private RectTransform m_textBaseUI    = default;
+		[SerializeField] private Text          m_textUI        = default;
+		[SerializeField] private RectTransform m_textRectUI    = default;
+		[SerializeField] private Vector2       m_sizeOffset    = default;
 
 		//====================================================================================
 		// 変数
@@ -53,14 +53,16 @@ namespace Kogane.Internal
 		/// </summary>
 		private void Awake()
 		{
-#if ENABLE_UNI_UI_DEBUG_TEXT
+#if DISABLE_UNI_UI_DEBUG_TEXT
+			Destroy( gameObject );
+#else
 			m_closeButtonUI.onClick.AddListener( () => SetState( false ) );
 			m_openButtonUI.onClick.AddListener( () => SetState( true ) );
-#else
-			Destroy( gameObject );
 #endif
 		}
-
+		
+#if DISABLE_UNI_UI_DEBUG_TEXT
+#else
 		/// <summary>
 		/// 開始する時に呼び出されます
 		/// </summary>
@@ -73,11 +75,9 @@ namespace Kogane.Internal
 			SetState( false );
 		}
 
-#if ENABLE_UNI_UI_DEBUG_TEXT
 		/// <summary>
 		/// 更新される時に呼び出されます
 		/// </summary>
-		[Conditional( ENABLE_SYMBOL_NAME )]
 		private void Update()
 		{
 			if ( !m_isOpen ) return;
@@ -98,7 +98,9 @@ namespace Kogane.Internal
 		/// <summary>
 		/// ステートを設定します
 		/// </summary>
-		[Conditional( ENABLE_SYMBOL_NAME )]
+#if DISABLE_UNI_UI_DEBUG_TEXT
+		[Conditional( DISABLE_CONDITION_STRING )]
+#endif
 		private void SetState( bool isOpen )
 		{
 			m_isOpen = isOpen;
@@ -115,7 +117,9 @@ namespace Kogane.Internal
 		/// <summary>
 		/// 表示するかどうかを設定します
 		/// </summary>
-		[Conditional( ENABLE_SYMBOL_NAME )]
+#if DISABLE_UNI_UI_DEBUG_TEXT
+		[Conditional( DISABLE_CONDITION_STRING )]
+#endif
 		public void SetVisible( bool isVisible )
 		{
 			var alpha = isVisible ? 1 : 0;
@@ -125,7 +129,9 @@ namespace Kogane.Internal
 		/// <summary>
 		/// 表示を設定します
 		/// </summary>
-		[Conditional( ENABLE_SYMBOL_NAME )]
+#if DISABLE_UNI_UI_DEBUG_TEXT
+		[Conditional( DISABLE_CONDITION_STRING )]
+#endif
 		public void SetDisp( string text )
 		{
 			SetDisp( 0, () => text );
@@ -134,7 +140,9 @@ namespace Kogane.Internal
 		/// <summary>
 		/// 表示を設定します
 		/// </summary>
-		[Conditional( ENABLE_SYMBOL_NAME )]
+#if DISABLE_UNI_UI_DEBUG_TEXT
+		[Conditional( DISABLE_CONDITION_STRING )]
+#endif
 		public void SetDisp( float interval, Func<string> getText )
 		{
 			m_interval = interval;
